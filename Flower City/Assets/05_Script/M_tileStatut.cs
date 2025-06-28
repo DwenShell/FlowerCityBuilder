@@ -6,6 +6,7 @@ public class M_tileStatut : MonoBehaviour
 {
     public bool IsOccupied { get; private set; } = false;
     public Renderer tileRenderer;
+    public GameObject attachedProps;
 
     public void SetOccupied(bool occupied)
     {
@@ -17,5 +18,12 @@ public class M_tileStatut : MonoBehaviour
         {
             tileRenderer.material.color = color;
         }
+    }
+    [ContextMenu ("Reset Tile")]
+    public void ResetTile()
+    {
+        Destroy(attachedProps);
+        this.GetComponent<Renderer>().material.color = Color.white;
+        SetOccupied(false);
     }
 }

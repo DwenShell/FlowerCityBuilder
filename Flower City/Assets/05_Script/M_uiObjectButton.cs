@@ -14,6 +14,8 @@ public class M_uiObjectButton : MonoBehaviour
     public float offset;
     public Color colorTile;
 
+    public bool isDeleteObj;
+
     [Header ("Screenshot Parameter")]
     public Vector3 tempPosition;
     public Quaternion tempRotation;
@@ -22,7 +24,7 @@ public class M_uiObjectButton : MonoBehaviour
 
     public void OnClick()
     {
-        M_objectPlacer.Instance.StartPlacing(objectToPlace, offset, colorTile);
+        M_objectPlacer.Instance.StartPlacing(objectToPlace, offset, colorTile, isDeleteObj);
     }
 
     public Texture2D CapturePrefab(GameObject prefab)

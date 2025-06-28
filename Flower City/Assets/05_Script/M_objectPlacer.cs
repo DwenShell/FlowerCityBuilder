@@ -16,13 +16,14 @@ public class M_objectPlacer : MonoBehaviour
 
     private float heightOffset;
     private Color tileColor;
+    private bool delObj;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public void StartPlacing(GameObject prefab, float offset, Color color)
+    public void StartPlacing(GameObject prefab, float offset, Color color, bool del)
     {
         if (currentGhost != null)
             Destroy(currentGhost);
@@ -31,8 +32,10 @@ public class M_objectPlacer : MonoBehaviour
         objectToPlace = prefab;
         heightOffset = offset;
         currentGhost = Instantiate(prefab);
+        currentGhost.transform.position = new Vector3(500, 0, 0);
         MakeTransparent(currentGhost);
         isPlacing = true;
+        delObj = del;
     }
 
     void Update()
@@ -57,10 +60,12 @@ public class M_objectPlacer : MonoBehaviour
                 bool isFree = !tile.IsOccupied;
                 SetGhostColor(isFree ? Color.green : Color.red);
 
-                if (Input.GetMouseButtonDown(0) && isFree)
+                if (Input.GetMouseButtonDown(0) && isFree && !delObj)
                 {
                     PlaceObject(tile);
                 }
+                if(Input.GetMouseButtonDown(0) && !isFree && delObj)
+                    tile.ResetTile();
             }
             else
             {
@@ -73,12 +78,13 @@ public class M_objectPlacer : MonoBehaviour
 
     private void PlaceObject(M_tileStatut tile)
     {
-        Instantiate(objectToPlace, new Vector3(tile.transform.position.x,
+        GameObject placedProps = Instantiate(objectToPlace, new Vector3(tile.transform.position.x,
             tile.transform.position.y + heightOffset,
             tile.transform.position.z),
             Quaternion.identity);
         tile.SetOccupied(true);
         tile.SetTileColor(tileColor);
+        tile.attachedProps = placedProps;
     }
 
     private void MakeTransparent(GameObject obj)
