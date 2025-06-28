@@ -15,6 +15,7 @@ public class M_objectPlacer : MonoBehaviour
     private M_tileStatut hoveredTile;
 
     private float heightOffset;
+    private float spawnScale;
     private Color tileColor;
     private bool delObj;
 
@@ -23,7 +24,7 @@ public class M_objectPlacer : MonoBehaviour
         Instance = this;
     }
 
-    public void StartPlacing(GameObject prefab, float offset, Color color, bool del)
+    public void StartPlacing(GameObject prefab, float offset, float scale, Color color, bool del)
     {
         if (currentGhost != null)
             Destroy(currentGhost);
@@ -31,8 +32,10 @@ public class M_objectPlacer : MonoBehaviour
         tileColor = color;
         objectToPlace = prefab;
         heightOffset = offset;
+        spawnScale = scale;
         currentGhost = Instantiate(prefab);
         currentGhost.transform.position = new Vector3(500, 0, 0);
+        currentGhost.transform.localScale = new Vector3(scale, scale, scale);
         MakeTransparent(currentGhost);
         isPlacing = true;
         delObj = del;
@@ -82,6 +85,7 @@ public class M_objectPlacer : MonoBehaviour
             tile.transform.position.y + heightOffset,
             tile.transform.position.z),
             Quaternion.identity);
+        placedProps.transform.localScale = new Vector3(spawnScale, spawnScale, spawnScale);
         tile.SetOccupied(true);
         tile.SetTileColor(tileColor);
         tile.attachedProps = placedProps;

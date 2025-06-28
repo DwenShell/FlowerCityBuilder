@@ -12,6 +12,7 @@ public class M_uiObjectButton : MonoBehaviour
     [HideInInspector] public Vector3 lastTempScale;
 
     public float offset;
+    public float scale;
     public Color colorTile;
 
     public bool isDeleteObj;
@@ -24,7 +25,7 @@ public class M_uiObjectButton : MonoBehaviour
 
     public void OnClick()
     {
-        M_objectPlacer.Instance.StartPlacing(objectToPlace, offset, colorTile, isDeleteObj);
+        M_objectPlacer.Instance.StartPlacing(objectToPlace, offset, scale, colorTile, isDeleteObj);
     }
 
     public Texture2D CapturePrefab(GameObject prefab)
