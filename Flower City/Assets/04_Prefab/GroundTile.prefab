@@ -118,3 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a3d4035be9c3014fba8619475cd7bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileRenderer: {fileID: 265101906975779017}

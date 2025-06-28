@@ -15,17 +15,19 @@ public class M_objectPlacer : MonoBehaviour
     private M_tileStatut hoveredTile;
 
     private float heightOffset;
+    private Color tileColor;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public void StartPlacing(GameObject prefab, float offset)
+    public void StartPlacing(GameObject prefab, float offset, Color color)
     {
         if (currentGhost != null)
             Destroy(currentGhost);
 
+        tileColor = color;
         objectToPlace = prefab;
         heightOffset = offset;
         currentGhost = Instantiate(prefab);
@@ -40,7 +42,7 @@ public class M_objectPlacer : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             CancelPlacement();
-            return; // On sort pour éviter de continuer la logique
+            return; 
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -76,6 +78,7 @@ public class M_objectPlacer : MonoBehaviour
             tile.transform.position.z),
             Quaternion.identity);
         tile.SetOccupied(true);
+        tile.SetTileColor(tileColor);
     }
 
     private void MakeTransparent(GameObject obj)
