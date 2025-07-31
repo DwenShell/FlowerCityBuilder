@@ -26,6 +26,7 @@ public class M_soundSlider : MonoBehaviour
                 sound.slider.onValueChanged.AddListener((value) => OnSliderChanged(sound));
                 OnSliderChanged(sound); // initialiser volume au départ
             }
+            setupSlider(sound);
         }
     }
 
@@ -38,5 +39,10 @@ public class M_soundSlider : MonoBehaviour
             int percentage = Mathf.RoundToInt(sound.slider.value * 100f);
             sound.volumeText.text = percentage + " %";
         }
+    }
+
+    private void setupSlider(SoundSlider sound)
+    {
+        sound.slider.gameObject.transform.GetChild(3).gameObject.GetComponent<TextMeshProUGUI>().text = sound.name;
     }
 }
